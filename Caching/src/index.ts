@@ -3,7 +3,7 @@ import { createClient } from "redis";
 
 const app = express();
 app.use(express.json());
-const client = createClient();
+const client = createClient(); //if not local redish then need to config the creatClient
 
 app.post("/submit", async (req, res) => {
   const { problemId, code, lang, userId } = req.body;
