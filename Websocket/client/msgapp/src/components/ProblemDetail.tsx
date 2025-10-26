@@ -1,10 +1,11 @@
 // components/ProblemDetail.tsx
 import React from 'react';
-import { useParams, Link } from 'react-router-dom';
+// import { useParams } from 'react-router-dom';
+import {  Link } from 'react-router-dom';
 import type { Problem } from '../types/problem';
 
 const ProblemDetail: React.FC = () => {
-  const { id } = useParams<{ id: string }>();
+//   const { id } = useParams<{ id: string }>();
 
   // Sample problem data - in real app, fetch based on id
   const problem: Problem = {
