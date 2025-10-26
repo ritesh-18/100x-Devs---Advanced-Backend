@@ -1,10 +1,11 @@
 // components/CodeEditor.tsx
 import React, { useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
+// import { UseParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import type { Problem } from '../types/problem';
 
 const CodeEditor: React.FC = () => {
-  const { id } = useParams<{ id: string }>();
+//   const { id } = useParams<{ id: string }>();
   const [code, setCode] = useState<string>(`function solveProblem(input) {\n  // Your code here\n  return input;\n}`);
   const [language, setLanguage] = useState<string>('JavaScript');
 
