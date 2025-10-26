@@ -12,31 +12,26 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const express_1 = __importDefault(require("express"));
-const redis_1 = require("redis");
-const app = (0, express_1.default)();
-app.use(express_1.default.json());
-const client = (0, redis_1.createClient)();
-app.post("/submit", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { problemId, code, lang, userId } = req.body;
-    // generally we would like to add data in db
-    //but here we will add the data in redis
-    yield client.LPUSH("problems", JSON.stringify({ code, lang, problemId, userId }));
-    //now store in db
-    res.status(200).send("submission recieved and stored");
-}));
-function creatRedisServer() {
+exports.getResult = getResult;
+const axios_1 = __importDefault(require("axios"));
+function getResult(token) {
     return __awaiter(this, void 0, void 0, function* () {
+        const options = {
+            method: "GET",
+            url: `https://judge0-ce.p.rapidapi.com/submissions/${token}`,
+            params: { base64_encoded: "true", fields: "*" },
+            headers: {
+                "x-rapidapi-key": "YOUR_KEY",
+                "x-rapidapi-host": "judge0-ce.p.rapidapi.com",
+            },
+        };
         try {
-            yield client.connect();
-            console.log("connected to redis");
+            const { data } = yield axios_1.default.request(options);
+            return data.response;
         }
         catch (error) {
-            console.log("some error happens in redis connection", error);
+            console.log(error);
+            return;
         }
     });
 }
-creatRedisServer();
-app.listen(3000, () => {
-    console.log("server is up running at port number 3000");
-});
